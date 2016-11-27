@@ -6,7 +6,17 @@ export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     ...asyncReducers,
-    form: formReducer
+    form: formReducer.plugin({
+      contact: (state, action) => { // <------ 'contact' is name of form given to reduxForm()
+        switch(action.type) {
+          case 'redux-form/SET_SUBMIT_SUCCEEDED':
+            console.log("selkjtwklejtojwej")
+            return {};       // <--- blow away form data
+          default:
+            return state;
+        }
+      }
+    })
   })
 }
 

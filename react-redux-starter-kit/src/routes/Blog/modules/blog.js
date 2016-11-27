@@ -1,23 +1,18 @@
+import { v4 } from 'node-uuid'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
 export const ADD_BLOG_POST = 'ADD_BLOG_POST'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
-  return {
-    type    : COUNTER_INCREMENT,
-    payload : value
-  }
-}
 
-export function addBlogPost (post = {}) {
+export function addBlogPost (values = {}) {
   console.log("Add Blog Post CAlled");
+  values.id = v4();
   return {
     type: ADD_BLOG_POST,
-    payload: post
+    payload: values
   }
 }
 
@@ -28,23 +23,6 @@ export function addBlogPost (post = {}) {
     NOTE: This is solely for demonstration purposes. In a real application,
     you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
     reducer take care of this logic.  */
-
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch(increment(getState().counter))
-        resolve()
-      }, 200)
-    })
-  }
-}
-
-export const actions = {
-  increment,
-  doubleAsync
-}
-
 
 const addBlogPostHelper = (state, action) => {
   const newBlogPosts = [...state.blogPosts, action.payload];

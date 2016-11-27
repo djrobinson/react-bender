@@ -19,3 +19,14 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+table {
+  width: 100%;
+  tr {
+    width: 100%;
+    td {
+      width: 25%;
+    }
+  }
+
+}

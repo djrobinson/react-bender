@@ -2,21 +2,30 @@ import React from 'react'
 import ContactForm from './Form';
 
 function handleSubmit(values) {
+  props.
   console.log("Submitted form!", values);
 }
 
 export const Blog = (props) => (
   <div style={{ margin: '0 auto' }} >
     <h2>Blog Entries</h2>
-    {
-      props.blog.blogPosts.map((post) => {
-        return (
-          <p>{post.content}</p>
-          )
-      })
-    }
+    <table>
+      <tbody>
+        {
+          props.blog.blogPosts.map((post) => {
+            return (
+              <tr key={post.id}>
+                <td>{post.email}</td>
+                <td>{post.firstName}</td>
+                <td>{post.lastName}</td>
+              </tr>
+              )
+          })
+        }
+      </tbody>
+    </table>
     <ContactForm
-      onSubmit={handleSubmit} />
+      onSubmit={props.addBlogPost} />
   </div>
 )
 
