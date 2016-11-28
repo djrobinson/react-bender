@@ -26,6 +26,8 @@ table {
     width: 100%;
     td {
       width: 20%;
+      padding: 1rem;
+      border: solid 1px black;
     }
   }
 
@@ -33,4 +35,8 @@ table {
 
 .cal-container {
   height: 500px;
+}
+
+.table-form {
+  padding: 1rem;
 }

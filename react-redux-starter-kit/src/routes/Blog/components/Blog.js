@@ -18,29 +18,52 @@ export const Blog = (props) => (
       <tbody>
         {
           props.blog.blogPosts.map((post) => {
-            return (
+            if (post.isEditable) {
+              return (
+                <tr>
+                  <td>
+                  Editable Post: {post.id}
+                  </td>
+                </tr>
+                )
+
+            } else {
+              return (
               <tr key={post.id}>
                 <td>{post.email}</td>
                 <td>{post.firstName}</td>
                 <td>{post.lastName}</td>
-                <td><button onClick={() => {
-                  props.deleteBlogPost(post.id)
-                }}>Delete</button></td>
+                <td>
+                  <button onClick={() => {
+                    props.deleteBlogPost(post.id)
+                  }}>Delete</button>
+                  <button onClick={() => {
+                    props.editBlogPost(post.id)
+                  }}>Edit</button>
+                </td>
               </tr>
               )
+            }
+
           })
         }
       </tbody>
     </table>
     <ContactForm
-      onSubmit={props.addBlogPost} />
+      onSubmit={props.addBlogPost}
+      initialValues={{
+        firstName: "tester",
+        lastName: "testLast",
+        email: "test@email"
+      }}/>
   </div>
 )
 
 Blog.propTypes = {
-  blog          : React.PropTypes.Object,
-  addBlogPost   : React.PropTypes.func.isRequired,
-  deleteBlogPost : React.PropTypes.func.isRequired
+  blog           : React.PropTypes.Object,
+  addBlogPost    : React.PropTypes.func.isRequired,
+  deleteBlogPost : React.PropTypes.func.isRequired,
+  editBlogPost   : React.PropTypes.func.isRequired
 }
 
 Blog.defaultProps =  ({

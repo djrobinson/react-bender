@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addBlogPost, deleteBlogPost } from '../modules/blog'
+import { addBlogPost, deleteBlogPost, editBlogPost } from '../modules/blog'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -14,7 +14,8 @@ import Blog from '../components/Blog'
 
 const mapDispatchToProps = {
   addBlogPost : (values) => addBlogPost(values),
-  deleteBlogPost : (id) => deleteBlogPost(id)
+  deleteBlogPost : (id) => deleteBlogPost(id),
+  editBlogPost : (id) => editBlogPost(id)
 }
 
 const mapStateToProps = (state) => ({
