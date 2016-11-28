@@ -15,7 +15,7 @@ class ContactForm extends Component {
           <Field name="lastName" component="input" type="text"/>
         </div>
         <div>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email Address</label>
           <Field name="email" component="input" type="text"/>
         </div>
         <button type="submit">Submit</button>

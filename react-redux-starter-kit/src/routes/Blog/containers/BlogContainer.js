@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addBlogPost } from '../modules/Blog'
+import { addBlogPost, deleteBlogPost } from '../modules/blog'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,7 +13,8 @@ import Blog from '../components/Blog'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  addBlogPost : (values) => addBlogPost(values)
+  addBlogPost : (values) => addBlogPost(values),
+  deleteBlogPost : (id) => deleteBlogPost(id)
 }
 
 const mapStateToProps = (state) => ({

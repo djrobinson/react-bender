@@ -10,7 +10,6 @@ export const makeRootReducer = (asyncReducers) => {
       contact: (state, action) => { // <------ 'contact' is name of form given to reduxForm()
         switch(action.type) {
           case 'redux-form/SET_SUBMIT_SUCCEEDED':
-            console.log("selkjtwklejtojwej")
             return {};       // <--- blow away form data
           default:
             return state;

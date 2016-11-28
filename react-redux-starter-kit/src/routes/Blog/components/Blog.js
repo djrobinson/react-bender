@@ -2,8 +2,13 @@ import React from 'react'
 import ContactForm from './Form';
 
 function handleSubmit(values) {
-  props.
+  props.addBlogPost(values);
   console.log("Submitted form!", values);
+}
+
+function deletePost(id){
+  console.log("Delete: ", id);
+  props.deleteBlogPost(id);
 }
 
 export const Blog = (props) => (
@@ -18,6 +23,9 @@ export const Blog = (props) => (
                 <td>{post.email}</td>
                 <td>{post.firstName}</td>
                 <td>{post.lastName}</td>
+                <td><button onClick={() => {
+                  props.deleteBlogPost(post.id)
+                }}>Delete</button></td>
               </tr>
               )
           })
@@ -31,7 +39,8 @@ export const Blog = (props) => (
 
 Blog.propTypes = {
   blog          : React.PropTypes.Object,
-  addBlogPost   : React.PropTypes.func.isRequired
+  addBlogPost   : React.PropTypes.func.isRequired,
+  deleteBlogPost : React.PropTypes.func.isRequired
 }
 
 Blog.defaultProps =  ({
