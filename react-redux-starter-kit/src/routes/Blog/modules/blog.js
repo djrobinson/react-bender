@@ -5,6 +5,7 @@ import { v4 } from 'node-uuid'
 export const ADD_BLOG_POST = 'ADD_BLOG_POST'
 export const DELETE_BLOG_POST = 'DELETE_BLOG_POST'
 export const EDIT_BLOG_POST = 'EDIT_BLOG_POST'
+export const UPDATE_BLOG_POST = 'UPDATE_BLOG_POST'
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -34,13 +35,14 @@ export function editBlogPost (id = '') {
     id: id
   }
 }
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk!
 
-    NOTE: This is solely for demonstration purposes. In a real application,
-    you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-    reducer take care of this logic.  */
+export function updateBlogPost (values = {}) {
+  console.log("Update blog post claled");
+  return {
+    type: UPDATE_BLOG_POST,
+    payload: values
+  }
+}
 
 const addBlogPostHelper = (state, action) => {
   const newBlogPosts = [...state.blogPosts, action.payload];
@@ -58,10 +60,31 @@ const editBlogPostHelper = (state, action) => {
   const newBlogPosts = state.blogPosts.map((el) => {
     if (el.id === action.id){
       el.isEditable = !el.isEditable;
+      console.log("Here was the next editable one: ", el);
+      return el;
+    } else if (el.isEditable) {
+      console.log("Here was the last editable one: ", el);
+      el.isEditable = !el.isEditable;
       return el;
     } else {
       return el;
     }
+  })
+  return newBlogPosts;
+}
+
+const updateBlogPostHelper = (state, action) => {
+  console.log("Update Blog Post State: ", state);
+  const newBlogPosts = state.blogPosts.map((el) => {
+    if (el.id === action.payload.id){
+      el.firstName = action.payload.firstName;
+      el.lastName = action.payload.lastName;
+      el.email = action.payload.email;
+      el.isEditable = false;
+      console.log("Update Blog Post Helper", el);
+      return el;
+    }
+    return el;
   })
   return newBlogPosts;
 }
@@ -83,6 +106,12 @@ const ACTION_HANDLERS = {
   },
   [EDIT_BLOG_POST]: (state, action) => {
     const blogPosts = editBlogPostHelper(state, action);
+    return Object.assign({}, state, {
+      blogPosts: blogPosts
+    })
+  },
+  [UPDATE_BLOG_POST]: (state, action) => {
+    const blogPosts = updateBlogPostHelper(state, action);
     return Object.assign({}, state, {
       blogPosts: blogPosts
     })

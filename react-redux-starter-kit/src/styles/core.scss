@@ -25,9 +25,8 @@ table {
   tr {
     width: 100%;
     td {
-      width: 20%;
-      padding: 1rem;
       border: solid 1px black;
+      padding: 2px;
     }
   }
 
@@ -37,6 +36,11 @@ table {
   height: 500px;
 }
 
-.table-form {
-  padding: 1rem;
+.table-row {
+  width: 100%;
+}
+
+.table-cell {
+  width: 25%;
+  display: inline-block;
 }

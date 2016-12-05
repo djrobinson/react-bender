@@ -1,5 +1,6 @@
 import React from 'react'
-import ContactForm from './Form';
+import CreateForm from './CreateForm';
+import EditForm from './EditForm';
 
 function handleSubmit(values) {
   props.addBlogPost(values);
@@ -11,51 +12,54 @@ function deletePost(id){
   props.deleteBlogPost(id);
 }
 
+function editBlogPost(id){
+  console.log("Edit blog post");
+}
+
+
 export const Blog = (props) => (
   <div style={{ margin: '0 auto' }} >
     <h2>Blog Entries</h2>
-    <table>
-      <tbody>
+
         {
           props.blog.blogPosts.map((post) => {
             if (post.isEditable) {
               return (
-                <tr>
-                  <td>
-                  Editable Post: {post.id}
-                  </td>
-                </tr>
-                )
-
+                <div className="table-row" key={post.id}>
+                  <EditForm
+                    key={post.id}
+                    form={`EditForm_${post.id.toString()}`}
+                    onSubmit={props.updateBlogPost}
+                    initialValues={{
+                      id: post.id,
+                      firstName: post.firstName,
+                      lastName: post.lastName,
+                      email: post.email
+                    }}/>
+                </div>
+              )
             } else {
               return (
-              <tr key={post.id}>
-                <td>{post.email}</td>
-                <td>{post.firstName}</td>
-                <td>{post.lastName}</td>
-                <td>
+              <div className="table-row" key={post.id}>
+                <div className="table-cell">{post.email}</div>
+                <div className="table-cell">{post.firstName}</div>
+                <div className="table-cell">{post.lastName}</div>
+                <div className="table-cell">
                   <button onClick={() => {
                     props.deleteBlogPost(post.id)
                   }}>Delete</button>
                   <button onClick={() => {
                     props.editBlogPost(post.id)
                   }}>Edit</button>
-                </td>
-              </tr>
+                </div>
+              </div>
               )
             }
-
           })
         }
-      </tbody>
-    </table>
-    <ContactForm
-      onSubmit={props.addBlogPost}
-      initialValues={{
-        firstName: "tester",
-        lastName: "testLast",
-        email: "test@email"
-      }}/>
+
+    <CreateForm
+      onSubmit={props.addBlogPost}/>
   </div>
 )
 
@@ -63,7 +67,8 @@ Blog.propTypes = {
   blog           : React.PropTypes.Object,
   addBlogPost    : React.PropTypes.func.isRequired,
   deleteBlogPost : React.PropTypes.func.isRequired,
-  editBlogPost   : React.PropTypes.func.isRequired
+  editBlogPost   : React.PropTypes.func.isRequired,
+  updateBlogPost : React.PropTypes.func.isRequired
 }
 
 Blog.defaultProps =  ({

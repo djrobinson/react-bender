@@ -7,7 +7,7 @@ export const makeRootReducer = (asyncReducers) => {
     location: locationReducer,
     ...asyncReducers,
     form: formReducer.plugin({
-      contact: (state, action) => { // <------ 'contact' is name of form given to reduxForm()
+      create: (state, action) => { // <------ 'contact' is name of form given to reduxForm()
         switch(action.type) {
           case 'redux-form/SET_SUBMIT_SUCCEEDED':
             return {};       // <--- blow away form data
