@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import DatePicker from 'react-datepicker';
+import Moment from 'moment';
+
+
+require('react-datepicker/dist/react-datepicker.css');
 
 class Createform extends Component {
     render() {
@@ -14,8 +19,8 @@ class Createform extends Component {
                   <label htmlFor="lastName">Last Name</label>
                   <Field name="lastName" component="input" type="text"/>
 
-                  <label htmlFor="email">Email Address</label>
-                  <Field name="email" component="input" type="text"/>
+                  <label htmlFor="date">Appointment Date</label>
+                  <DatePicker name="date" />
                   <button type="submit">Submit</button>
                 </form>
     );

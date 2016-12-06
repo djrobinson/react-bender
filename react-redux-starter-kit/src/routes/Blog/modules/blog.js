@@ -62,10 +62,6 @@ const editBlogPostHelper = (state, action) => {
       el.isEditable = !el.isEditable;
       console.log("Here was the next editable one: ", el);
       return el;
-    } else if (el.isEditable) {
-      console.log("Here was the last editable one: ", el);
-      el.isEditable = !el.isEditable;
-      return el;
     } else {
       return el;
     }
