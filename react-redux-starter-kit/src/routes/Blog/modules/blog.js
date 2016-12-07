@@ -1,4 +1,5 @@
 import { v4 } from 'node-uuid'
+import Moment from 'moment';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -6,12 +7,13 @@ export const ADD_BLOG_POST = 'ADD_BLOG_POST'
 export const DELETE_BLOG_POST = 'DELETE_BLOG_POST'
 export const EDIT_BLOG_POST = 'EDIT_BLOG_POST'
 export const UPDATE_BLOG_POST = 'UPDATE_BLOG_POST'
+export const CHANGE_DATE = 'CHANGE_DATE'
 // ------------------------------------
 // Actions
 // ------------------------------------
 
 export function addBlogPost (values = {}) {
-  console.log("Add Blog Post Called");
+  console.log("Add Blog Post Called", values);
   values.id = v4();
   values.isEditable = false;
   return {
@@ -44,7 +46,18 @@ export function updateBlogPost (values = {}) {
   }
 }
 
+export function changeDate (data = Moment()) {
+  console.log("Change Selected Date", data);
+  return {
+    type: CHANGE_DATE,
+    selectedDate: data
+  }
+}
+
 const addBlogPostHelper = (state, action) => {
+  console.log("Add Blog Post State: ", state);
+  action.payload.date = state.selectedDate;
+
   const newBlogPosts = [...state.blogPosts, action.payload];
   return newBlogPosts;
 }
@@ -75,7 +88,6 @@ const updateBlogPostHelper = (state, action) => {
     if (el.id === action.payload.id){
       el.firstName = action.payload.firstName;
       el.lastName = action.payload.lastName;
-      el.email = action.payload.email;
       el.isEditable = false;
       console.log("Update Blog Post Helper", el);
       return el;
@@ -83,6 +95,11 @@ const updateBlogPostHelper = (state, action) => {
     return el;
   })
   return newBlogPosts;
+}
+
+const changeDateHelper = (state, action) => {
+  return action.selectedDate;
+
 }
 // ------------------------------------
 // Action Handlers
@@ -110,6 +127,12 @@ const ACTION_HANDLERS = {
     const blogPosts = updateBlogPostHelper(state, action);
     return Object.assign({}, state, {
       blogPosts: blogPosts
+    })
+  },
+  [CHANGE_DATE]: (state, action) => {
+    const selectedDate = changeDateHelper(state, action);
+    return Object.assign({}, state, {
+      selectedDate: selectedDate
     })
   }
 }

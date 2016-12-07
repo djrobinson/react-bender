@@ -1,6 +1,9 @@
 import React from 'react'
 import CreateForm from './CreateForm';
 import EditForm from './EditForm';
+import BigCalendar from 'react-big-calendar';
+import Moment from 'moment';
+import events from '../events';
 
 function handleSubmit(values) {
   props.addBlogPost(values);
@@ -16,11 +19,11 @@ function editBlogPost(id){
   console.log("Edit blog post");
 }
 
+BigCalendar.momentLocalizer(Moment);
 
 export const Blog = (props) => (
   <div style={{ margin: '0 auto' }} >
     <h2>Blog Entries</h2>
-
         {
           props.blog.blogPosts.map((post) => {
             if (post.isEditable) {
@@ -34,16 +37,17 @@ export const Blog = (props) => (
                       id: post.id,
                       firstName: post.firstName,
                       lastName: post.lastName,
-                      email: post.email
+                      selectedDate: post.date,
+                      endDate: post.endDate
                     }}/>
                 </div>
               )
             } else {
               return (
               <div className="table-row" key={post.id}>
-                <div className="table-cell">{post.email}</div>
                 <div className="table-cell">{post.firstName}</div>
                 <div className="table-cell">{post.lastName}</div>
+                <div className="table-cell">{post.date.toString()}</div>
                 <div className="table-cell">
                   <button onClick={() => {
                     props.deleteBlogPost(post.id)
@@ -59,23 +63,35 @@ export const Blog = (props) => (
         }
 
     <CreateForm
+      changeHandler={props.changeDate}
+      selected={props.blog.selectedDate}
       onSubmit={props.addBlogPost}/>
+    <div className="cal-container">
+      <BigCalendar
+        timeslots={30}
+        events={props.eventsList}
+      />
+    </div>
   </div>
+
 )
 
 Blog.propTypes = {
-  blog           : React.PropTypes.Object,
+  blog           : React.PropTypes.object,
   addBlogPost    : React.PropTypes.func.isRequired,
   deleteBlogPost : React.PropTypes.func.isRequired,
   editBlogPost   : React.PropTypes.func.isRequired,
-  updateBlogPost : React.PropTypes.func.isRequired
+  updateBlogPost : React.PropTypes.func.isRequired,
+  changeDate     : React.PropTypes.func.isRequired
 }
 
+
 Blog.defaultProps =  ({
-    blog: {
-      blogPosts: []
-    }
-  })
+  blog: {
+    blogPosts: []
+  },
+  eventsList: events
+})
 
 
 export default Blog
